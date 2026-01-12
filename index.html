@@ -15,43 +15,35 @@
         rel="stylesheet">
 
     <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdlinked.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="mobile.css">
-    <link rel="stylesheet" href="animations.css">
 </head>
 
-<body>
+<body data-remove-animations>
 
-    <!-- Announcement Bar -->
-    <div class="announcement-bar" id="announcementBar">
-        <span class="announcement-text">🎉 خصم 10% على أول طلب لك! استخدم كود: MEGO&MO - شحن مجاني للطلبات فوق 500 جنيه
-            🚚</span>
-        <button class="announcement-close" onclick="document.getElementById('announcementBar').style.display='none'"
-            aria-label="إغلاق الإعلان">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
+    <!-- Skip link for accessibility -->
+    <a href="#home" class="skip-link">تخطي إلى المحتوى</a>
 
-    <!-- Loading Screen -->
+    <!-- Announcement Bar removed per request -->
+
+    <!-- Loading Screen (logo removed; spinner only) -->
     <div class="loading-screen" id="loadingScreen">
-        <img src="images/logo.png" alt="Coco & Rose" class="loading-logo">
-        <div class="loading-spinner"></div>
-        <p class="loading-text">جاري التحميل...</p>
+        <div class="loading-spinner" aria-hidden="true"></div>
     </div>
 
     <!-- Floating Social Sidebar -->
     <div class="floating-social">
-        <a href="https://www.facebook.com/profile.php?id=61582813863599" target="_blank" aria-label="Facebook">
-            <img src="images/facebook.png" alt="Facebook">
+        <a href="https://www.facebook.com/profile.php?id=61582813863599" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <img src="images/optimized/facebook.webp" alt="Facebook" loading="lazy" decoding="async" width="40" height="40">
         </a>
-        <a href="https://instagram.com/cocoandrose_cosmotics" target="_blank" aria-label="Instagram">
-            <img src="images/instagram.png" alt="Instagram">
+        <a href="https://instagram.com/cocoandrose_cosmotics" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <img src="images/optimized/instagram.webp" alt="Instagram" loading="lazy" decoding="async" width="40" height="40">
         </a>
-        <a href="https://wa.me/201020909939" target="_blank" aria-label="WhatsApp">
-            <img src="images/whatsapp.png" alt="WhatsApp">
+        <a href="https://wa.me/201020909939" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+            <img src="images/optimized/whatsapp.webp" alt="WhatsApp" loading="lazy" decoding="async" width="40" height="40">
         </a>
     </div>
 
@@ -70,7 +62,7 @@
     <header class="header">
         <div class="container">
             <div class="header-content">
-                <img src="images/logo.png" alt="Coco & Rose Logo" class="logo">
+                <img src="images/optimized/logo.webp" alt="Coco & Rose Logo" class="logo" decoding="async" width="160" height="50">
                 <nav class="nav">
                     <a href="#home" class="nav-link">الرئيسية</a>
                     <a href="#products" class="nav-link">المنتجات</a>
@@ -93,7 +85,7 @@
     <!-- Mobile Navigation -->
     <div class="mobile-nav" id="mobileNav">
         <div class="mobile-nav-header">
-            <img src="images/logo.png" alt="Coco & Rose" class="mobile-logo">
+            <div class="mobile-logo-text">Coco & Rose</div>
             <button class="mobile-nav-close" id="mobileNavClose">
                 <i class="fas fa-times"></i>
             </button>
@@ -132,7 +124,7 @@
         <div class="hero-overlay"></div>
         <div class="container">
             <div class="hero-content">
-                <img src="images/logo.png" alt="Coco & Rose" class="hero-logo">
+                <!-- hero logo removed to avoid duplicate; header logo is primary -->
                 <h1 class="hero-title">Coco & Rose</h1>
                 <p class="hero-subtitle">Naturally Beautiful, Inside and Out</p>
                 <p class="hero-description">منتجات طبيعية للعناية بالبشرة والشعر والجسم</p>
@@ -141,8 +133,8 @@
         </div>
     </section>
 
-    <!-- About Section -->
-    <section class="about scroll-reveal" id="about">
+    <!-- About Section (merged features, no animations) -->
+    <section class="about" id="about">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">من نحن</h2>
@@ -153,21 +145,17 @@
                     في Coco & Rose، نؤمن بجمال الطبيعة. نقدم منتجات عناية طبيعية بالكامل للبشرة والشعر والجسم،
                     مصنوعة من أجود المكونات الطبيعية لتمنحك جمالاً حقيقياً من الداخل والخارج.
                 </p>
-                <div class="features">
-                    <div class="feature-card">
-                        <i class="fas fa-leaf feature-icon"></i>
-                        <h3>مكونات طبيعية 100%</h3>
-                        <p>جميع منتجاتنا من مكونات طبيعية آمنة</p>
-                    </div>
-                    <div class="feature-card">
-                        <i class="fas fa-heart feature-icon"></i>
-                        <h3>صنع بحب</h3>
-                        <p>كل منتج مصنوع بعناية فائقة</p>
-                    </div>
-                    <div class="feature-card">
-                        <i class="fas fa-star feature-icon"></i>
-                        <h3>جودة عالية</h3>
-                        <p>نضمن لك أفضل النتائج</p>
+                <div class="about-features" aria-hidden="false">
+                    <div class="about-features-card">
+                        <div class="about-features-icons">
+                            <span class="feature-inline"><i class="fas fa-leaf"></i></span>
+                            <span class="feature-inline"><i class="fas fa-heart"></i></span>
+                            <span class="feature-inline"><i class="fas fa-star"></i></span>
+                        </div>
+                        <div class="about-features-text">
+                            <h3>طبيعي — مُصنَع بحب — جودة مضمونة</h3>
+                            <p>نستخدم مكونات طبيعية 100%، نصنع كل منتج بعناية لنقدم لك نتائج آمنة وفعّالة.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -175,11 +163,11 @@
     </section>
 
     <!-- Lifestyle Section -->
-    <section class="lifestyle scroll-reveal-scale">
+    <section class="lifestyle">
         <div class="container">
             <div class="lifestyle-content">
-                <div class="lifestyle-image">
-                    <img src="images/lifestyle.jpg" alt="Coco & Rose Natural Products" loading="lazy">
+                <div class="lifestyle-image" role="img" aria-label="جمال طبيعي في كل تفصيلة">
+                    <img src="images/optimized/lifestyle.webp" alt="Coco & Rose Natural Products" loading="lazy" decoding="async" width="1200" height="500">
                     <div class="lifestyle-overlay">
                         <div class="lifestyle-text">
                             <h3>جمال طبيعي في كل تفصيلة</h3>
@@ -191,79 +179,9 @@
         </div>
     </section>
 
-    <!-- Testimonials Section -->
-    <section class="testimonials scroll-reveal-left">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">آراء عملائنا</h2>
-                <div class="title-underline"></div>
-            </div>
-            <div class="testimonial-showcase">
-                <div class="testimonial-image">
-                    <img src="images/testimonial.jpg" alt="شعر صحي من أول استخدام" loading="lazy">
-                </div>
-                <div class="testimonial-content">
-                    <div class="quote-icon">
-                        <i class="fas fa-quote-right"></i>
-                    </div>
-                    <h3>شعر صحي من أول استخدام</h3>
-                    <p class="testimonial-text">
-                        منتجات Coco & Rose غيّرت حياتي! شعري أصبح أقوى وأكثر لمعاناً بفضل
-                        المكونات الطبيعية 100%. النتائج واضحة من أول استخدام، وأنا سعيدة جداً
-                        بالتجربة. أنصح الجميع بتجربة هذه المنتجات الرائعة.
-                    </p>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="customer-name">- عميلة سعيدة، القاهرة</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- Testimonials removed from here (relocated after Products) -->
 
-    <!-- Why Choose Us Section -->
-    <section class="why-choose scroll-reveal-right">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">لماذا تختار Coco & Rose؟</h2>
-                <div class="title-underline"></div>
-            </div>
-            <div class="benefits-grid">
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <i class="fas fa-shipping-fast"></i>
-                    </div>
-                    <h3>توصيل سريع</h3>
-                    <p>نوصل لك المنتجات في أسرع وقت لجميع المحافظات</p>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <i class="fas fa-hand-holding-usd"></i>
-                    </div>
-                    <h3>دفع عند الاستلام</h3>
-                    <p>ادفع بكل راحة عند استلام طلبك</p>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>منتجات آمنة</h3>
-                    <p>مكونات طبيعية 100% ومضمونة الجودة</p>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h3>دعم مستمر</h3>
-                    <p>نحن معك في كل خطوة عبر واتساب</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- 'Why Choose Us' section removed as requested -->
 
     <!-- Products Section -->
     <section class="products" id="products">
@@ -291,15 +209,45 @@
         </div>
     </section>
 
-
-
-
+    <!-- Testimonials Section (moved after Products) -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">آراء عملائنا</h2>
+                <div class="title-underline"></div>
+            </div>
+            <div class="testimonial-showcase">
+                <div class="testimonial-content">
+                    <div class="quote-icon">
+                        <i class="fas fa-quote-right"></i>
+                    </div>
+                    <h3>شعر صحي من أول استخدام</h3>
+                    <p class="testimonial-text">
+                        منتجات Coco & Rose غيّرت حياتي! شعري أصبح أقوى وأكثر لمعاناً بفضل
+                        المكونات الطبيعية 100%. النتائج واضحة من أول استخدام، وأنا سعيدة جداً
+                        بالتجربة. أنصح الجميع بتجربة هذه المنتجات الرائعة.
+                    </p>
+                    <div class="stars" aria-hidden="true">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="customer-name">- عميلة سعيدة، القاهرة</p>
+                </div>
+                <div class="testimonial-image" aria-hidden="true">
+                    <img src="images/optimized/testimonial.webp" alt="شعر صحي من أول استخدام" loading="lazy" decoding="async" width="600" height="420">
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Checkout Modal -->
-    <div class="modal" id="checkoutModal">
+    <div class="modal" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>إتمام الطلب</h3>
+                <h3 id="checkoutTitle">إتمام الطلب</h3>
                 <button class="modal-close" id="modalClose" aria-label="إغلاق">
                     <i class="fas fa-times"></i>
                 </button>
@@ -416,7 +364,7 @@
                         <i class="fab fa-whatsapp"></i>
                         <div>
                             <h4>واتساب</h4>
-                            <p><a href="https://wa.me/201020909939" target="_blank">تواصل معنا مباشرة</a></p>
+                            <p><a href="https://wa.me/201020909939" target="_blank" rel="noopener noreferrer">تواصل معنا مباشرة</a></p>
                         </div>
                     </div>
                     <div class="contact-item">
@@ -454,21 +402,21 @@
                     <p><i class="fas fa-phone"></i> 01020909939</p>
                     <p><i class="fas fa-phone"></i> 01017377281</p>
                     <div class="social-links">
-                        <a href="https://wa.me/201020909939" target="_blank" aria-label="واتساب">
-                            <img src="images/whatsapp.png" alt="WhatsApp">
+                        <a href="https://wa.me/201020909939" target="_blank" rel="noopener noreferrer" aria-label="واتساب">
+                            <img src="images/optimized/whatsapp.webp" alt="WhatsApp" loading="lazy" decoding="async" width="40" height="40">
                         </a>
-                        <a href="https://www.facebook.com/profile.php?id=61582813863599" target="_blank"
+                        <a href="https://www.facebook.com/profile.php?id=61582813863599" target="_blank" rel="noopener noreferrer"
                             aria-label="فيسبوك">
-                            <img src="images/facebook.png" alt="Facebook">
+                            <img src="images/optimized/facebook.webp" alt="Facebook" loading="lazy" decoding="async" width="40" height="40">
                         </a>
-                        <a href="https://instagram.com/cocoandrose_cosmotics" target="_blank" aria-label="إنستجرام">
-                            <img src="images/instagram.png" alt="Instagram">
+                        <a href="https://instagram.com/cocoandrose_cosmotics" target="_blank" rel="noopener noreferrer" aria-label="إنستجرام">
+                            <img src="images/optimized/instagram.webp" alt="Instagram" loading="lazy" decoding="async" width="40" height="40">
                         </a>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 Osama Reda$ All rights reserved$</p>
+                <p>&copy; 2026 Osama Reda. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -476,7 +424,6 @@
     <!-- Custom JavaScript -->
     <script src="app.js"></script>
     <script src="mobile.js"></script>
-    <script src="animations.js"></script>
 </body>
 
 </html>

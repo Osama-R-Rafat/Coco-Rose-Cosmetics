@@ -36,7 +36,6 @@ function checkResponsiveMode() {
 // INIT MOBILE
 // ============================================
 function initMobile() {
-    console.log('📱 Switching to Mobile Mode');
     setupMobileMenu();
     setupScrollToTop();
     enhanceMobileNav();
@@ -47,7 +46,7 @@ function initMobile() {
 // CLEANUP MOBILE
 // ============================================
 function cleanupMobile() {
-    console.log('💻 Switching to Desktop Mode');
+    // switched to desktop mode
 
     // Cleanup Mobile Menu
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');

@@ -1,44 +1,11 @@
-/* ===================================
-   ADVANCED ANIMATIONS & EFFECTS
-   Premium animations for enhanced UX
-   =================================== */
+/* animations.css (placeholder)
+   File intentionally simplified — animations removed.
+   Keeping placeholder to avoid 404s if referenced.
+*/
 
-/* Loading Screen */
-.loading-screen {
-    position: fixed;
-    inset: 0;
-    background: linear-gradient(135deg, #a8577d, #6b4458);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    transition: opacity 0.5s ease, visibility 0.5s ease;
-}
+/* No animation rules are active. */
 
-.loading-screen.hidden {
-    opacity: 0;
-    visibility: hidden;
-}
-
-.loading-logo {
-    width: 120px;
-    height: 120px;
-    margin-bottom: 2rem;
-    animation: logoFloat 2s ease-in-out infinite;
-}
-
-@keyframes logoFloat {
-
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-20px);
-    }
-}
+/* Remove this file to fully delete animations from the repo. */
 
 .loading-spinner {
     width: 60px;

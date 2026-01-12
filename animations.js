@@ -1,84 +1,9 @@
-// ============================================
-// ADVANCED ANIMATIONS & FEATURES
-// Premium interactions and animations
-// ============================================
+/* animations.js: removed — animations replaced by static behaviors.
+   Kept as a small placeholder to avoid 404s if referenced.
+   All animation logic was migrated or disabled in `app.js` and `style.css`.
+*/
 
-document.addEventListener('DOMContentLoaded', () => {
-    setupLoadingScreen();
-    setupScrollAnimations();
-    setupFAQAccordion();
-    setupCounterAnimations();
-    setupNewsletterForm();
-    setupParallaxEffect();
-    setupTypingEffect();
-});
-
-// ============================================
-// TYPING EFFECT
-// ============================================
-function setupTypingEffect() {
-    const heroTitle = document.querySelector('.hero-title');
-    if (!heroTitle) return;
-
-    const text = heroTitle.textContent;
-    heroTitle.textContent = '';
-    heroTitle.innerHTML = '<span class="typing-text"></span><span class="typing-cursor"></span>';
-
-    const typingText = heroTitle.querySelector('.typing-text');
-    let i = 0;
-
-    function type() {
-        if (i < text.length) {
-            typingText.textContent += text.charAt(i);
-            i++;
-            setTimeout(type, 100);
-        } else {
-            // Remove cursor after a delay
-            setTimeout(() => {
-                const cursor = heroTitle.querySelector('.typing-cursor');
-                if (cursor) cursor.style.opacity = '0';
-            }, 2000);
-        }
-    }
-
-    // Start typing after loading screen
-    setTimeout(type, 1500);
-}
-
-// ============================================
-// CONFETTI CELEBRATION
-// ============================================
-function celebrateOrder() {
-    // Disable confetti on mobile for performance
-    if (window.innerWidth < 768) return;
-
-    const duration = 3000;
-    const container = document.createElement('div');
-    container.className = 'confetti-container';
-    document.body.appendChild(container);
-
-    const colors = ['#a8577d', '#d097b3', '#FFD700', '#FFF', '#25D366'];
-
-    for (let i = 0; i < 100; i++) {
-        setTimeout(() => {
-            const confetti = document.createElement('div');
-            confetti.className = 'confetti';
-            confetti.style.left = Math.random() * 100 + 'vw';
-            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-            confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
-            container.appendChild(confetti);
-
-            // Cleanup individual confetti
-            setTimeout(() => confetti.remove(), 4000);
-        }, Math.random() * duration);
-    }
-
-    // Cleanup container
-    setTimeout(() => container.remove(), duration + 4000);
-}
-
-// Global access for checkout
-window.celebrateOrder = celebrateOrder;
+/* No runtime animation code. */
 
 // ============================================
 // LOADING SCREEN
@@ -229,14 +154,13 @@ function setupNewsletterForm() {
 
         const email = form.querySelector('.newsletter-input').value;
 
-        // Show success message
-        showAnimatedNotification('شكراً لاشتراكك! سنرسل لك أحدث العروض قريباً 💌', 'success');
+        // Show success message (non-animated)
+        showNotification('شكراً لاشتراكك! سنرسل لك أحدث العروض قريباً');
 
         // Reset form
         form.reset();
 
-        // Here you can add actual newsletter subscription logic
-        console.log('Newsletter subscription:', email);
+        // TODO: hook up real newsletter backend
     });
 }
 
@@ -426,4 +350,4 @@ if ('PerformanceObserver' in window) {
     }
 }
 
-console.log('✨ Advanced animations loaded successfully!');
+// animations placeholder loaded

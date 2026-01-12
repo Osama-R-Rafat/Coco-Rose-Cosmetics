@@ -7,7 +7,7 @@ const products = [
         name: "زيت طبيعي للشعر",
         description: "زيت معالج طبيعي للشعر، يمنح شعرك القوة واللمعان",
         price: 220,
-        image: "images/product1.png",
+        image: "images/optimized/product1.webp",
         category: "hair"
     },
     {
@@ -15,7 +15,7 @@ const products = [
         name: "سبراي تونيك للشعر",
         description: "مكونات طبيعية، يقوي الشعر ويحميه من التساقط",
         price: 160,
-        image: "images/product2.png",
+        image: "images/optimized/product2.webp",
         category: "hair"
     },
     {
@@ -23,7 +23,7 @@ const products = [
         name: "سيروم للبشرة",
         description: "سيروم طبيعي للعناية بالبشرة وترطيبها العميق",
         price: 200,
-        image: "images/product3.png",
+        image: "images/optimized/product3.webp",
         category: "skin"
     }
 ];
@@ -43,9 +43,6 @@ const FORMSUBMIT_EMAIL = "your-email@example.com";
 // INITIALIZATION
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
-    // Render products
-    renderProducts();
-
     // Render products
     renderProducts();
 
@@ -78,7 +75,7 @@ function renderProducts(productsToRender = products) {
 
     productsGrid.innerHTML = productsToRender.map(product => `
         <div class="product-card" data-product-id="${product.id}">
-            <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy" onload="this.classList.add('loaded')">
+            <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy" decoding="async" width="400" height="280" onload="this.classList.add('loaded')">
             <div class="product-info">
                 <h3 class="product-name">${product.name}</h3>
                 <p class="product-description">${product.description}</p>
@@ -262,9 +259,9 @@ function addToCart(productId, quantity) {
 
 function removeFromCart(productId) {
     cart = cart.filter(item => item.id !== productId);
-    saveCart();
-    updateCartUI();
-}
+                cartItems.innerHTML = cart.map((item, index) => `
+                    <div class="cart-item" style="display:flex; gap:10px; margin-bottom:10px; align-items:center;">
+                        <img src="${item.image}" alt="${item.name}" class="cart-item-image" loading="lazy" decoding="async" width="60" height="60">
 
 function updateCartQuantity(productId, quantity) {
     const item = cart.find(item => item.id === productId);
@@ -369,11 +366,11 @@ function updateCartUI() {
             if (shippingContainer) shippingContainer.style.display = 'block';
             if (cartTotalSection) cartTotalSection.style.display = 'block';
 
-            if (cartItems) {
+                if (cartItems) {
                 cartItems.style.display = 'block';
                 cartItems.innerHTML = cart.map((item, index) => `
                     <div class="cart-item" style="display:flex; gap:10px; margin-bottom:10px; align-items:center;">
-                        <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                        <img src="${item.image}" alt="${item.name}" class="cart-item-image" loading="lazy" decoding="async" width="60" height="60">
                         <div class="cart-item-info" style="flex:1;">
                             <div style="display:flex; justify-content:space-between;">
                                 <div style="font-weight:600;">${item.name}</div>
@@ -411,6 +408,42 @@ function showCart() {
 
     if (modal) modal.classList.add('active');
     if (modalOverlay) modalOverlay.classList.add('active');
+    // Move focus into modal for accessibility
+    const closeBtn = modal && modal.querySelector('.modal-close');
+    if (closeBtn) closeBtn.focus();
+
+    // Add key handling for Esc and focus trap
+    // Define handler once and attach to document
+    window.__cocoModalKeyHandler = window.__cocoModalKeyHandler || function (e) {
+        if (!modal || !modal.classList.contains('active')) return;
+
+        // Close on Escape
+        if (e.key === 'Escape') {
+            hideCart();
+            return;
+        }
+
+        if (e.key === 'Tab') {
+            const focusable = modal.querySelectorAll('a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])');
+            if (!focusable || focusable.length === 0) return;
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+
+            if (e.shiftKey) {
+                if (document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                }
+            } else {
+                if (document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
+            }
+        }
+    };
+
+    document.addEventListener('keydown', window.__cocoModalKeyHandler);
 }
 
 function hideCart() {
@@ -419,6 +452,14 @@ function hideCart() {
 
     if (modal) modal.classList.remove('active');
     if (modalOverlay) modalOverlay.classList.remove('active');
+    // Return focus to cart button
+    const floatingCartBtn = document.getElementById('floatingCartBtn');
+    if (floatingCartBtn) floatingCartBtn.focus();
+
+    // Remove modal key handler
+    if (window.__cocoModalKeyHandler) {
+        document.removeEventListener('keydown', window.__cocoModalKeyHandler);
+    }
 }
 
 // ============================================
@@ -438,6 +479,18 @@ function handleCheckout(event) {
     // Validate
     if (!name || !phone || !address) {
         showNotification('يرجى ملء جميع الحقول المطلوبة');
+        return;
+    }
+
+    // Validate phone format
+    if (!validatePhone(phone)) {
+        showNotification('يرجى إدخال رقم هاتف صالح مكون من 11 رقماً');
+        return;
+    }
+
+    // Validate email if provided
+    if (email && !validateEmail(email)) {
+        showNotification('الرجاء إدخال بريد إلكتروني صالح أو تركه فارغاً');
         return;
     }
 
@@ -467,13 +520,14 @@ function handleCheckout(event) {
     // Clear cart and close modal
     setTimeout(() => {
         clearCart();
-        hideCheckoutModal();
-        document.getElementById('checkoutForm').reset();
+        hideCart();
+        const checkoutFormEl = document.getElementById('checkoutForm');
+        if (checkoutFormEl) checkoutFormEl.reset();
 
         // Trigger celebration
         if (window.celebrateOrder) window.celebrateOrder();
 
-        showAnimatedNotification('تم إرسال طلبك بنجاح! سيتم التواصل معك قريباً', 'success');
+        showNotification('تم إرسال طلبك بنجاح! سيتم التواصل معك قريباً');
     }, 1000);
 }
 
@@ -508,7 +562,7 @@ function sendEmailNotification(name, phone, address, email) {
     })
         .then(response => response.json())
         .then(data => {
-            console.log('Email sent successfully:', data);
+            // Success - keep minimal logging in non-production
         })
         .catch(error => {
             console.error('Email error:', error);
@@ -582,7 +636,9 @@ function setupEventListeners() {
 // ============================================
 function showNotification(message, onClick = null) {
     // Create notification element
+    // Simple non-animated toast notification
     const notification = document.createElement('div');
+    notification.setAttribute('role', 'status');
     notification.style.cssText = `
         position: fixed;
         top: 20px;
@@ -590,68 +646,26 @@ function showNotification(message, onClick = null) {
         transform: translateX(-50%);
         background: linear-gradient(135deg, #a8577d, #d097b3);
         color: white;
-        padding: 16px 24px;
-        border-radius: 50px;
-        box-shadow: 0 4px 20px rgba(168, 87, 125, 0.4);
+        padding: 12px 18px;
+        border-radius: 10px;
         z-index: 10000;
-        animation: slideDownFade 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         font-weight: 600;
-        min-width: 300px;
+        min-width: 200px;
         text-align: center;
-        cursor: ${onClick ? 'pointer' : 'default'};
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 10px;
     `;
 
-    notification.innerHTML = `
-        <i class="fas fa-check-circle"></i>
-        <span>${message}</span>
-    `;
+    notification.innerHTML = `<span>${message}</span>`;
 
-    if (onClick) {
-        notification.addEventListener('click', onClick);
-    }
-
-    // Add animation styles dynamically if not present
-    if (!document.getElementById('notification-styles')) {
-        const style = document.createElement('style');
-        style.id = 'notification-styles';
-        style.textContent = `
-            @keyframes slideDownFade {
-                from {
-                    transform: translate(-50%, -50px);
-                    opacity: 0;
-                }
-                to {
-                    transform: translate(-50%, 0);
-                    opacity: 1;
-                }
-            }
-            @keyframes slideUpFade {
-                from {
-                    transform: translate(-50%, 0);
-                    opacity: 1;
-                }
-                to {
-                    transform: translate(-50%, -50px);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    }
+    if (onClick) notification.addEventListener('click', onClick);
 
     document.body.appendChild(notification);
 
-    // Remove after 3 seconds
-    setTimeout(() => {
-        notification.style.animation = 'slideUpFade 0.5s ease forwards';
-        setTimeout(() => {
-            notification.remove();
-        }, 500);
-    }, 4000);
+    // Remove after timeout (no animations)
+    setTimeout(() => notification.remove(), 3500);
 }
 
 // ============================================
@@ -678,39 +692,7 @@ function validateEmail(email) {
 function flyToCart(sourceImage) {
     const cartBtn = document.getElementById('floatingCartBtn');
     if (!cartBtn || !sourceImage) return;
-
-    const imgClone = sourceImage.cloneNode();
-    const rect = sourceImage.getBoundingClientRect();
-    const cartRect = cartBtn.getBoundingClientRect();
-
-    imgClone.style.cssText = `
-        position: fixed;
-        top: ${rect.top}px;
-        left: ${rect.left}px;
-        width: ${rect.width}px;
-        height: ${rect.height}px;
-        z-index: 9999;
-        pointer-events: none;
-        transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-        border-radius: 50%;
-        opacity: 0.8;
-    `;
-
-    document.body.appendChild(imgClone);
-
-    // Trigger animation
-    setTimeout(() => {
-        imgClone.style.top = `${cartRect.top + 10}px`;
-        imgClone.style.left = `${cartRect.left + 10}px`;
-        imgClone.style.width = '30px';
-        imgClone.style.height = '30px';
-        imgClone.style.opacity = '0';
-    }, 10);
-
-    // Cleanup
-    setTimeout(() => {
-        imgClone.remove();
-        cartBtn.classList.add('bump');
-        setTimeout(() => cartBtn.classList.remove('bump'), 300);
-    }, 800);
+    // Non-animated update: just briefly bump the cart badge visually by toggling class
+    cartBtn.classList.add('bump');
+    setTimeout(() => cartBtn.classList.remove('bump'), 250);
 }

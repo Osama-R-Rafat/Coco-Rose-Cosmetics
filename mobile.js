@@ -40,6 +40,29 @@ function initMobile() {
     setupScrollToTop();
     enhanceMobileNav();
     isMobileInitialized = true;
+    // Ensure the page isn't scrolled horizontally due to RTL or hidden off-canvas elements
+    setTimeout(() => {
+        try {
+            window.scrollTo(0, 0);
+            document.documentElement.scrollLeft = 0;
+            document.body.scrollLeft = 0;
+        } catch (e) {
+            // ignore
+        }
+    }, 50);
+
+    // If the document is wider than the viewport and the user sees large blank areas,
+    // try centering the page horizontally as a fallback (helps when RTL causes initial scroll to edge).
+    setTimeout(() => {
+        try {
+            const doc = document.documentElement;
+            const overflowX = doc.scrollWidth - window.innerWidth;
+            if (overflowX > 0) {
+                const centerScroll = Math.round(overflowX / 2);
+                window.scrollTo({ left: centerScroll, top: 0, behavior: 'auto' });
+            }
+        } catch (e) {}
+    }, 120);
 }
 
 // ============================================

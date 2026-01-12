@@ -259,9 +259,11 @@ function addToCart(productId, quantity) {
 
 function removeFromCart(productId) {
     cart = cart.filter(item => item.id !== productId);
-                cartItems.innerHTML = cart.map((item, index) => `
-                    <div class="cart-item" style="display:flex; gap:10px; margin-bottom:10px; align-items:center;">
-                        <img src="${item.image}" alt="${item.name}" class="cart-item-image" loading="lazy" decoding="async" width="60" height="60">
+    // Persist changes and refresh UI
+    saveCart();
+    updateCartUI();
+
+}
 
 function updateCartQuantity(productId, quantity) {
     const item = cart.find(item => item.id === productId);

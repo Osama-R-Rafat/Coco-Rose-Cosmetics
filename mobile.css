@@ -3,11 +3,14 @@
    Additional CSS for mobile menu and UX improvements
    =================================== */
 
-/* Scroll to Top Button */
+/* Base font size adjustment for mobile */
 @media (max-width: 768px) {
     html {
         font-size: 14px;
-        /* Slightly smaller text on mobile */
+    }
+
+    body {
+        overflow-x: hidden;
     }
 }
 
@@ -202,7 +205,7 @@
 /* Mobile Responsive Enhancements */
 @media (max-width: 768px) {
     .mobile-menu-toggle {
-        display: flex;
+        display: flex !important;
     }
 
     .scroll-top {
@@ -233,5 +236,15 @@
 
     .logo {
         height: 40px;
+    }
+
+    .mobile-menu-toggle {
+        display: flex !important;
+    }
+}
+
+@media (min-width: 769px) {
+    .mobile-menu-toggle {
+        display: none !important;
     }
 }

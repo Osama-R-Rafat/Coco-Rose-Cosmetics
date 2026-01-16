@@ -850,7 +850,16 @@ function openProductDetailsModal(productId) {
         modal.classList.add('active');
         overlay.classList.add('active');
 
-        // Prevent background scrolling
+        // Prevent background scrolling (Position Fixed Method)
+        // 1. Save current scroll position
+        window.savedScrollPosition = window.scrollY;
+
+        // 2. Lock body in place visually
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${window.savedScrollPosition}px`;
+        document.body.style.width = '100%';
+
+        // 3. Add class for overflow hidden
         document.body.classList.add('modal-open');
         document.documentElement.classList.add('modal-open');
 
@@ -879,6 +888,19 @@ function closeProductDetailsModal() {
         // Restore background scrolling
         document.body.classList.remove('modal-open');
         document.documentElement.classList.remove('modal-open');
+
+        // Unlock body and restore position
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+
+        // Instant scroll restoration
+        if (window.savedScrollPosition !== undefined) {
+            window.scrollTo({
+                top: window.savedScrollPosition,
+                behavior: 'instant'
+            });
+        }
 
         // Remove event listeners
         const closeButton = document.getElementById('productDetailsClose');

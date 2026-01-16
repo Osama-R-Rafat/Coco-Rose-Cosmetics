@@ -1778,13 +1778,9 @@ body[data-remove-animations] {
 }
 
 /* Prevent background scrolling when modal is open */
-/* Prevent background scrolling when modal is open - Stricter lock for mobile */
-html.modal-open,
+/* Prevent background scrolling when modal is open */
 body.modal-open {
     overflow: hidden !important;
-    height: 100vh !important;
-    touch-action: none;
-    /* Disables touch gestures on background */
 }
 
 /* Ensure modal content is scrollable */
